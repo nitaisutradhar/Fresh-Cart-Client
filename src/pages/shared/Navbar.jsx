@@ -1,13 +1,22 @@
 import { useState } from "react"
-import { Link } from "react-router"
-import { motion as Motion, AnimatePresence } from "framer-motion"
+import { NavLink } from "react-router"
+import { AnimatePresence, motion } from "framer-motion"
 import { FiMenu, FiX } from "react-icons/fi"
 import { Button } from "@/components/ui/button"
 
-export default function Navbar() {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const navLinks = [
+  const isLoggedIn = true // Replace with actual Firebase auth check
+  const role = "admin"
+  const user = {
+    name: "Nitai",
+    photo: "https://i.pravatar.cc/40?img=3",
+  }
+
+  const dashboardRoute = `/dashboard/${role}`
+
+  const navItems = [
     { label: "Home", path: "/" },
     { label: "All Products", path: "/all-products" },
     { label: "Offers", path: "/offers" },
@@ -17,28 +26,72 @@ export default function Navbar() {
     <header className="w-full shadow-sm bg-white fixed top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 text-xl font-bold text-primary">
-        <img src="/logo.png" alt="FreshCart Logo" className="h-8 w-8" />
-        <span>FreshCart</span>
-        </Link>
+        <NavLink to="/" className="flex items-center gap-2 text-xl font-bold text-primary">
+          <img src="/logo.png" alt="FreshCart Logo" className="h-8 w-8" />
+          <span>FreshCart</span>
+        </NavLink>
 
-
-        {/* Desktop Nav */}
+        {/* Desktop Menu */}
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className="text-gray-700 hover:text-primary font-medium transition-colors"
+          {navItems.map(({ label, path }) => (
+            <NavLink
+              key={path}
+              to={path}
+              className={({ isActive }) =>
+                `font-medium transition-colors cursor-pointer ${
+                  isActive ? "text-primary font-semibold" : "text-gray-600"
+                } hover:text-emerald-600`
+              }
             >
-              {link.label}
-            </Link>
+              {label}
+            </NavLink>
           ))}
-          <Link to="/login">
-            <Button className="bg-primary text-white hover:bg-emerald-600">
-              Login
-            </Button>
-          </Link>
+
+          {!isLoggedIn ? (
+            <>
+              <NavLink to="/login">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button className="cursor-pointer bg-primary text-white hover:bg-emerald-600">
+                    Login
+                  </Button>
+                </motion.div>
+              </NavLink>
+
+              <NavLink to="/signup">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button className="cursor-pointer bg-secondary text-white hover:bg-orange-500">
+                    Sign Up
+                  </Button>
+                </motion.div>
+              </NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink to={dashboardRoute}>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button className="cursor-pointer bg-accent text-white hover:bg-purple-500">
+                    Dashboard
+                  </Button>
+                </motion.div>
+              </NavLink>
+
+              <img
+                src={user.photo}
+                alt="Profile"
+                className="h-9 w-9 rounded-full border-2 border-primary"
+              />
+
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  variant="destructive"
+                  className="cursor-pointer"
+                  onClick={() => alert("Logout")}
+                >
+                  Logout
+                </Button>
+              </motion.div>
+            </>
+          )}
         </nav>
 
         {/* Mobile Toggle */}
@@ -49,33 +102,79 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Animation */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <Motion.div
+          <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             className="md:hidden bg-white shadow-inner"
           >
             <div className="flex flex-col items-start px-6 py-4 gap-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className="text-gray-700 font-medium"
+              {navItems.map(({ label, path }) => (
+                <NavLink
+                  key={path}
+                  to={path}
                   onClick={() => setIsOpen(false)}
+                  className={({ isActive }) =>
+                    `text-base font-medium ${
+                      isActive ? "text-primary font-semibold" : "text-gray-600"
+                    } hover:text-emerald-600`
+                  }
                 >
-                  {link.label}
-                </Link>
+                  {label}
+                </NavLink>
               ))}
-              <Link to="/login" onClick={() => setIsOpen(false)}>
-                <Button className="bg-primary w-full text-white">Login</Button>
-              </Link>
+
+              {!isLoggedIn ? (
+                <>
+                  <NavLink to="/login" onClick={() => setIsOpen(false)}>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
+                      <Button className="w-full cursor-pointer bg-primary text-white hover:bg-emerald-600">
+                        Login
+                      </Button>
+                    </motion.div>
+                  </NavLink>
+
+                  <NavLink to="/signup" onClick={() => setIsOpen(false)}>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
+                      <Button className="w-full cursor-pointer bg-secondary text-white hover:bg-orange-500">
+                        Sign Up
+                      </Button>
+                    </motion.div>
+                  </NavLink>
+                </>
+              ) : (
+                <>
+                  <NavLink to={dashboardRoute} onClick={() => setIsOpen(false)}>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
+                      <Button className="w-full cursor-pointer bg-accent text-white hover:bg-purple-500">
+                        Dashboard
+                      </Button>
+                    </motion.div>
+                  </NavLink>
+
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
+                    <Button
+                      variant="destructive"
+                      className="w-full cursor-pointer"
+                      onClick={() => {
+                        setIsOpen(false)
+                        alert("Logout")
+                      }}
+                    >
+                      Logout
+                    </Button>
+                  </motion.div>
+                </>
+              )}
             </div>
-          </Motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </header>
   )
 }
+
+export default Navbar
