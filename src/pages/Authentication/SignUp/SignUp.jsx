@@ -1,15 +1,18 @@
 import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { Link } from "react-router"
+import { FormProvider, useForm } from "react-hook-form"
+import { Form, Link } from "react-router"
 import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa"
+import ImageUpload from "@/components/ImageUpload"
 
 const SignUp = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const methods = useForm()
+// eslint-disable-next-line no-unused-vars
+const { register, handleSubmit, formState: { errors } } = methods
   const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit = (data) => {
@@ -29,9 +32,10 @@ const SignUp = () => {
           Create Your Account
         </h2>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
           {/* Name */}
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
@@ -42,7 +46,7 @@ const SignUp = () => {
           </div>
 
           {/* Email */}
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
@@ -53,8 +57,11 @@ const SignUp = () => {
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
 
+          {/* Image Upload */}
+            <ImageUpload />
+
           {/* Photo URL */}
-          <div>
+          {/* <div>
             <Label htmlFor="photo">Profile Image URL</Label>
             <Input
               id="photo"
@@ -62,10 +69,10 @@ const SignUp = () => {
               {...register("photo", { required: "Photo URL is required" })}
             />
             {errors.photo && <p className="text-red-500 text-sm mt-1">{errors.photo.message}</p>}
-          </div>
+          </div> */}
 
           {/* Password */}
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
             <div className="relative">
                 <Input
@@ -98,19 +105,28 @@ const SignUp = () => {
 
 
           {/* Submit */}
-          <Button type="submit" className="w-full bg-primary text-white hover:bg-emerald-600">
-            Sign Up
-          </Button>
-        </form>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
+            <Button
+                type="submit"
+                className="w-full bg-primary text-white hover:bg-emerald-600 cursor-pointer"
+            >
+                Sign Up
+            </Button>
+            </motion.div>
+        </form>  
+        </FormProvider>
+        
 
         {/* Divider */}
         <div className="my-6">
           <Separator />
           <p className="text-center text-sm text-gray-500 mt-4 mb-2">or</p>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
           <Button variant="outline" className="w-full flex items-center gap-2 justify-center">
             <FaGoogle />
             Sign up with Google
           </Button>
+          </motion.div>
         </div>
 
         {/* Already have account */}
