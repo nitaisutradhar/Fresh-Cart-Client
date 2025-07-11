@@ -3,11 +3,12 @@ import { NavLink } from "react-router"
 import { AnimatePresence, motion } from "framer-motion"
 import { FiMenu, FiX } from "react-icons/fi"
 import { Button } from "@/components/ui/button"
+import { navItems } from "./navItems"
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const isLoggedIn = true // Replace with actual Firebase auth check
+  const isLoggedIn = false // Replace with actual Firebase auth check
   const role = "admin"
   const user = {
     name: "Nitai",
@@ -16,14 +17,12 @@ const Navbar = () => {
 
   const dashboardRoute = `/dashboard/${role}`
 
-  const navItems = [
-    { label: "Home", path: "/" },
-    { label: "All Products", path: "/all-products" },
-    { label: "Offers", path: "/offers" },
-  ]
-
   return (
-    <header className="w-full shadow-sm bg-white fixed top-0 left-0 z-50">
+    <motion.header 
+    initial={{ y: -100, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  transition={{ duration: 0.5, ease: "easeOut" }}
+    className="w-full shadow-sm bg-white fixed top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-2 text-xl font-bold text-primary">
@@ -33,10 +32,13 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center gap-6">
-          {navItems.map(({ label, path }) => (
+          {navItems.map(({ label, path }, index) => (
             <NavLink
               key={path}
               to={path}
+              initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index, duration: 0.3 }}
               className={({ isActive }) =>
                 `font-medium transition-colors cursor-pointer ${
                   isActive ? "text-primary font-semibold" : "text-gray-600"
@@ -96,9 +98,11 @@ const Navbar = () => {
 
         {/* Mobile Toggle */}
         <div className="md:hidden z-50">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-2xl text-primary">
+          <motion.button
+          whileTap={{ scale: 0.9, rotate: 90 }}
+           onClick={() => setIsOpen(!isOpen)} className="text-2xl text-primary">
             {isOpen ? <FiX /> : <FiMenu />}
-          </button>
+          </motion.button>
         </div>
       </div>
 
@@ -173,7 +177,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   )
 }
 

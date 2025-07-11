@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import { Link } from "react-router"
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa"
+import { navItems } from "./navItems"
 
 const Footer = () => {
 return (
@@ -9,7 +10,7 @@ return (
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="bg-gray-50 text-gray-700 mt-12 border-t border-gray-200"
+        className="bg-gray-50 text-gray-700 border-t border-gray-200"
     >
         <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
             {/* Brand */}
@@ -27,9 +28,13 @@ return (
             <div>
                 <h4 className="text-md font-semibold mb-3 text-gray-800">Quick Links</h4>
                 <ul className="space-y-2 text-sm">
-                    <li><Link to="/" className="hover:text-primary">Home</Link></li>
-                    <li><Link to="/all-products" className="hover:text-primary">All Products</Link></li>
-                    <li><Link to="/offers" className="hover:text-primary">Offers</Link></li>
+                    {navItems.map(({label,path}, index) => (
+                        <li key={index}>
+                            <Link to={path} className="hover:text-primary">
+                                {label}
+                            </Link>
+                        </li>
+                    ))}
                 </ul>
             </div>
 
