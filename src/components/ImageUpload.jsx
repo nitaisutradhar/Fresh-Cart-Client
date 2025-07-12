@@ -30,7 +30,8 @@ const ImageUpload = () => {
       if (result.success) {
         const imageUrl = result.data.url
         setValue("photo", imageUrl)
-        toast.success("Image uploaded successfully!")
+        toast.success("Image uploaded successfully!",{ autoClose: 1000,
+hideProgressBar: true, })
       } else {
         toast.error("Image upload failed. Please try again.")
       }

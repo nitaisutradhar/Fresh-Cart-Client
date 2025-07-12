@@ -5,10 +5,13 @@ import { RouterProvider } from 'react-router'
 import { router } from './router/router.jsx'
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css"
+import AuthProvider from './contexts/AuthContext/AuthProvider'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
-    <ToastContainer position="top-center" autoClose={3000} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    <ToastContainer position="top-center" autoClose={1100} />
+    </AuthProvider>
   </StrictMode>,
 )

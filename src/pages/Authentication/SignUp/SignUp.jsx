@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
-import { Form, Link } from "react-router"
+import { Form, Link, useNavigate } from "react-router"
 import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa"
 import ImageUpload from "@/components/ImageUpload"
+import useAuth from "@/hooks/useAuth"
+import { toast } from "react-toastify"
 
 const SignUp = () => {
   const methods = useForm()
@@ -15,10 +17,36 @@ const SignUp = () => {
 const { register, handleSubmit, formState: { errors } } = methods
   const [showPassword, setShowPassword] = useState(false)
 
-  const onSubmit = (data) => {
-    console.log("Signup Data:", data)
-    // TODO: Send to Firebase or backend
+const navigate = useNavigate()
+const { createUser, updateUserProfile, signInWithGoogle } = useAuth()
+
+const onSubmit = async (data) => {
+  try {
+    const { name, email, password, photo } = data
+
+    const result = await createUser(email, password)
+    await updateUserProfile({
+      displayName: name,
+      photoURL: photo
+    })
+    console.log("User created:", result.user)
+
+    toast.success("Account created successfully!")
+    navigate("/")
+  } catch (err) {
+    console.error(err)
+    toast.error(err.message)
   }
+}
+const handleGoogleSignUp = async () => {
+  try {
+    await signInWithGoogle()
+    toast.success("Signed in with Google!")
+    navigate("/dashboard/user")
+  } catch (err) {
+    toast.error(err.message)
+  }
+}
 
   return (
     <motion.div
@@ -59,17 +87,6 @@ const { register, handleSubmit, formState: { errors } } = methods
 
           {/* Image Upload */}
             <ImageUpload />
-
-          {/* Photo URL */}
-          {/* <div>
-            <Label htmlFor="photo">Profile Image URL</Label>
-            <Input
-              id="photo"
-              placeholder="https://imagehost.com/photo.jpg"
-              {...register("photo", { required: "Photo URL is required" })}
-            />
-            {errors.photo && <p className="text-red-500 text-sm mt-1">{errors.photo.message}</p>}
-          </div> */}
 
           {/* Password */}
           <div className="space-y-2">
@@ -122,7 +139,7 @@ const { register, handleSubmit, formState: { errors } } = methods
           <Separator />
           <p className="text-center text-sm text-gray-500 mt-4 mb-2">or</p>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
-          <Button variant="outline" className="w-full flex items-center gap-2 justify-center">
+          <Button onClick={handleGoogleSignUp} variant="outline" className="w-full flex items-center gap-2 justify-center">
             <FaGoogle />
             Sign up with Google
           </Button>

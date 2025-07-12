@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -9,16 +9,35 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa"
 import { toast } from "react-toastify"
+import useAuth from "@/hooks/useAuth"
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [showPassword, setShowPassword] = useState(false)
 
-  const onSubmit = (data) => {
-    console.log("Login Data:", data)
+const { signIn, signInWithGoogle } = useAuth()
+const navigate = useNavigate()
+
+const onSubmit = async (data) => {
+  try {
+    const { email, password } = data
+    console.log("Login data:", email, password)
+    await signIn(email, password)
     toast.success("Logged in successfully!")
-    // TODO: Auth logic
+    navigate("/")
+  } catch (err) {
+    toast.error(err.message)
   }
+}
+const handleGoogleSignIn = async () => {
+  try {
+    await signInWithGoogle()
+    toast.success("Signed in with Google!")
+    navigate("/")
+  } catch (err) {
+    toast.error(err.message)
+  }
+}
 
   return (
     <motion.div
@@ -91,7 +110,7 @@ const Login = () => {
           <Separator />
           <p className="text-center text-sm text-gray-500 mt-4 mb-2">or</p>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
-            <Button variant="outline" className="w-full flex items-center gap-2 justify-center cursor-pointer">
+            <Button onClick={handleGoogleSignIn} variant="outline" className="w-full flex items-center gap-2 justify-center cursor-pointer">
               <FaGoogle />
               Login with Google
             </Button>
