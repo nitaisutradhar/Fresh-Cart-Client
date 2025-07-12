@@ -26,9 +26,31 @@ const onSubmit = async (data) => {
     toast.success("Logged in successfully!")
     navigate("/")
   } catch (err) {
-    toast.error(err.message)
+    console.error(err)
+
+    const errorCode = err.code
+
+    // Firebase error → friendly message
+    switch (errorCode) {
+      case "auth/wrong-password":
+        toast.error("Your password is not correct.")
+        break
+      case "auth/user-not-found":
+        toast.error("No account found with this email.")
+        break
+      case "auth/too-many-requests":
+        toast.error("Too many attempts. Try again later.")
+        break
+      case "auth/invalid-email":
+        toast.error("Invalid email address.")
+        break
+      default:
+        toast.error("Something went wrong. Please try again.")
+        break
+    }
   }
 }
+
 const handleGoogleSignIn = async () => {
   try {
     await signInWithGoogle()

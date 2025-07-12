@@ -3,13 +3,13 @@ import MainLayout from "../layouts/MainLayout";
 import SignUp from "@/pages/Authentication/SignUp/SignUp";
 import Login from "@/pages/Authentication/Login/login";
 import Home from "@/pages/Home/Home";
-import Loading from "@/components/Loading";
+import ErrorPage from "@/pages/shared/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         Component: MainLayout,
-        errorElement: <Loading />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,

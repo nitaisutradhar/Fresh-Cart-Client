@@ -8,8 +8,11 @@ const MainLayout = () => {
     return (
         <div>
             <Navbar />
-                {/* Outlet renders the child routes */}
+            <main className="pt-10 min-h-screen">
+                {/* Routed pages */}
                 <Outlet />
+                {/* Outlet renders the child routes */}
+            </main>
             <Footer />
         </div>
     );
