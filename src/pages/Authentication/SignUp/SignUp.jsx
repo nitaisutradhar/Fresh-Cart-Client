@@ -1,52 +1,99 @@
-import { useState } from "react"
-import { FormProvider, useForm } from "react-hook-form"
-import { Form, Link, useNavigate } from "react-router"
-import { motion } from "framer-motion"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa"
-import ImageUpload from "@/components/ImageUpload"
-import useAuth from "@/hooks/useAuth"
-import { toast } from "react-toastify"
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { Form, Link, useNavigate } from "react-router";
+import { motion } from "framer-motion";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
+import ImageUpload from "@/components/ImageUpload";
+import useAuth from "@/hooks/useAuth";
+import { toast } from "react-toastify";
+import useAxios from "@/hooks/useAxios";
 
 const SignUp = () => {
-  const methods = useForm()
-// eslint-disable-next-line no-unused-vars
-const { register, handleSubmit, formState: { errors } } = methods
-  const [showPassword, setShowPassword] = useState(false)
+  const methods = useForm();
+  const {
+    register,
+    // eslint-disable-next-line no-unused-vars
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+  const [showPassword, setShowPassword] = useState(false);
+  const axiosInstance = useAxios();
 
-const navigate = useNavigate()
-const { createUser, updateUserProfile, signInWithGoogle } = useAuth()
+  const navigate = useNavigate();
+  const { createUser, updateUserProfile, signInWithGoogle } = useAuth();
 
-const onSubmit = async (data) => {
-  try {
-    const { name, email, password, photo } = data
+  const onSubmit = async (data) => {
+    try {
+      const { name, email, password, photo } = data;
 
-    const result = await createUser(email, password)
-    await updateUserProfile({
-      displayName: name,
-      photoURL: photo
-    })
-    console.log("User created:", result.user)
+      const result = await createUser(email, password);
+      console.log("User created1:", result);
+      if (result.user) {
+        // Save user data to your database
+        const userData = {
+          name: result.user.displayName,
+          email: result.user.email,
+          image: result.user.photoURL || "https://i.pravatar.cc/150?img=3", // Default image if none provided
+        };
+        const response = await axiosInstance.post("/user", userData);
+        console.log("User created and save in mongodb res:", response);
+      }
+      await updateUserProfile({
+        displayName: name,
+        photoURL: photo,
+      });
 
-    toast.success("Account created successfully!")
-    navigate("/")
-  } catch (err) {
-    console.error(err)
-    toast.error(err.message)
-  }
-}
-const handleGoogleSignUp = async () => {
-  try {
-    await signInWithGoogle()
-    toast.success("Signed in with Google!")
-    navigate("/dashboard/user")
-  } catch (err) {
-    toast.error(err.message)
-  }
-}
+      toast.success("Account created successfully!");
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+
+      const errorCode = err.code
+
+    // Firebase error → friendly message
+    switch (errorCode) {
+      case "auth/wrong-password":
+        toast.error("Your password is not correct.")
+        break
+      case "auth/email-already-in-use":
+        toast.error("An account with this email already exists.")
+        break
+      case "auth/too-many-requests":
+        toast.error("Too many attempts. Try again later.")
+        break
+      case "auth/invalid-email":
+        toast.error("Invalid email address.")
+        break
+      default:
+        toast.error("Something went wrong. Please try again.")
+        break
+    }
+    }
+  };
+  const handleGoogleSignUp = async () => {
+    try {
+      const result = await signInWithGoogle();
+      console.log(result)
+      if (result.user) {
+        // Save user data to your database
+        const userData = {
+          name: result.user.displayName,
+          email: result.user.email,
+          image: result.user.photoURL || "https://i.pravatar.cc/150?img=3", // Default image if none provided
+        };
+        const response = await axiosInstance.post("/user", userData);
+        console.log("User created and save in mongodb res:", response);
+      }
+      toast.success("Signed in with Google!");
+      navigate("/");
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
 
   return (
     <motion.div
@@ -62,100 +109,124 @@ const handleGoogleSignUp = async () => {
 
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
-          {/* Name */}
-          <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              placeholder="Your full name"
-              {...register("name", { required: "Name is required" })}
-            />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
-          </div>
+            {/* Name */}
+            <div className="space-y-2">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                placeholder="Your full name"
+                {...register("name", { required: "Name is required" })}
+              />
+              {errors.name && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.name.message}
+                </p>
+              )}
+            </div>
 
-          {/* Email */}
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              {...register("email", { required: "Email is required" })}
-            />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-          </div>
+            {/* Email */}
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                {...register("email", { required: "Email is required" })}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
 
-          {/* Image Upload */}
+            {/* Image Upload */}
             <ImageUpload />
 
-          {/* Password */}
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <div className="relative">
+            {/* Password */}
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
                 <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="********"
-                {...register("password", {
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="********"
+                  {...register("password", {
                     required: "Password is required",
                     minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
+                      value: 6,
+                      message: "Password must be at least 6 characters",
                     },
                     pattern: {
-                    value: /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
-                    message: "Must include at least one uppercase and one lowercase letter",
+                      value: /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
+                      message:
+                        "Must include at least one uppercase and one lowercase letter",
                     },
-                })}
+                  })}
                 />
                 <span
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-2.5 text-xl text-gray-500 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-2.5 text-xl text-gray-500 cursor-pointer"
                 >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </span>
-            </div>
-            {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-            )}
+              </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
-
-          {/* Submit */}
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
-            <Button
+            {/* Submit */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full"
+            >
+              <Button
                 type="submit"
                 className="w-full bg-primary text-white hover:bg-emerald-600 cursor-pointer"
-            >
+              >
                 Sign Up
-            </Button>
+              </Button>
             </motion.div>
-        </form>  
+          </form>
         </FormProvider>
-        
 
         {/* Divider */}
         <div className="my-6">
           <Separator />
           <p className="text-center text-sm text-gray-500 mt-4 mb-2">or</p>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full">
-          <Button onClick={handleGoogleSignUp} variant="outline" className="w-full flex items-center gap-2 justify-center">
-            <FaGoogle />
-            Sign up with Google
-          </Button>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-full"
+          >
+            <Button
+              onClick={handleGoogleSignUp}
+              variant="outline"
+              className="w-full flex items-center gap-2 justify-center"
+            >
+              <FaGoogle />
+              Sign up with Google
+            </Button>
           </motion.div>
         </div>
 
         {/* Already have account */}
         <p className="text-sm text-center mt-4">
           Already have an account?
-          <Link to="/login" className="text-primary font-medium ml-1 hover:underline">
+          <Link
+            to="/login"
+            className="text-primary font-medium ml-1 hover:underline"
+          >
             Login here
           </Link>
         </p>
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

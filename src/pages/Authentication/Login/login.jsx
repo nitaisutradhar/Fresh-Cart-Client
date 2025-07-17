@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { Link, useNavigate } from "react-router"
+import { Link, Navigate, useLocation, useNavigate } from "react-router"
 import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -10,19 +10,34 @@ import { Separator } from "@/components/ui/separator"
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa"
 import { toast } from "react-toastify"
 import useAuth from "@/hooks/useAuth"
+import Loading from "@/components/Loading"
+import axios from "axios"
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [showPassword, setShowPassword] = useState(false)
 
-const { signIn, signInWithGoogle } = useAuth()
-const navigate = useNavigate()
+const { signIn, signInWithGoogle, loading, user } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location?.state?.from?.pathname || '/'
+  if (user) return <Navigate to={from} replace={true} />
+  if (loading) return <Loading />
+  // form submit handler)
 
 const onSubmit = async (data) => {
   try {
     const { email, password } = data
     console.log("Login data:", email, password)
-    await signIn(email, password)
+   const result = await signIn(email, password)
+    const userData = {
+        name: result?.user?.displayName,
+        email: result?.user?.email,
+        image: result?.user?.photoURL,
+      }
+      const {data: userRes} = axios.post(`${import.meta.env.VITE_API_URL}/user`,userData)
+      console.log(userRes)
+      navigate(from, {replace: true})
     toast.success("Logged in successfully!")
     navigate("/")
   } catch (err) {
@@ -53,9 +68,16 @@ const onSubmit = async (data) => {
 
 const handleGoogleSignIn = async () => {
   try {
-    await signInWithGoogle()
-    toast.success("Signed in with Google!")
-    navigate("/")
+    const result = await signInWithGoogle()
+    const userData = {
+        name: result?.user?.displayName,
+        email: result?.user?.email,
+        image: result?.user?.photoURL,
+      }
+      const {data: userRes} = axios.post(`${import.meta.env.VITE_API_URL}/user`,userData)
+      console.log(userRes)
+      navigate(from, {replace: true})
+    toast.success("Logged in successfully!")
   } catch (err) {
     toast.error(err.message)
   }
