@@ -4,6 +4,8 @@ import SignUp from "@/pages/Authentication/SignUp/SignUp";
 import Login from "@/pages/Authentication/Login/login";
 import Home from "@/pages/Home/Home";
 import ErrorPage from "@/pages/shared/ErrorPage/ErrorPage";
+import PrivateRoute from "@/routes/PrivateRoute";
+import DashboardLayout from "@/layouts/DashboardLayout";
 
 export const router = createBrowserRouter([
     {
@@ -26,4 +28,9 @@ export const router = createBrowserRouter([
             }
         ],
     },
+    {
+        path: "/dashboard",
+        element: 
+        <PrivateRoute><DashboardLayout /></PrivateRoute>
+    }
 ]);
