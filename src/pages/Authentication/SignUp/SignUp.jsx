@@ -31,11 +31,11 @@ const SignUp = () => {
       const { name, email, password, photo } = data;
 
       const result = await createUser(email, password);
-      console.log("User created1:", result);
+      console.log("User created1:", result.user.displayName);
       if (result.user) {
         // Save user data to your database
         const userData = {
-          name: result.user.displayName,
+          name: name,
           email: result.user.email,
           image: result.user.photoURL || "https://i.pravatar.cc/150?img=3", // Default image if none provided
         };

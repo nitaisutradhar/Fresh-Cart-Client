@@ -1,20 +1,38 @@
 /* eslint-disable no-unused-vars */
-import { NavLink } from 'react-router'
+import { NavLink } from "react-router"
+import { motion } from "framer-motion"
 
-const MenuItem = ({ label, address, icon: Icon }) => {
+const MenuItem = ({ label, address, icon: Icon}) => {
   return (
     <NavLink
       to={address}
       end
       className={({ isActive }) =>
-        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-          isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+        `group relative flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-300 ${
+          isActive
+            ? "bg-primary/10 text-primary font-semibold"
+            : "text-gray-600 hover:bg-emerald-50 hover:text-emerald-700"
         }`
       }
     >
-      <Icon className='w-5 h-5' />
+      {/* Icon with hover/active animation */}
+      <motion.div
+        whileHover={{ scale: 1.15 }}
+        whileTap={{ scale: 0.95 }}
+        className="text-xl"
+      >
+        <Icon />
+      </motion.div>
 
-      <span className='mx-4 font-medium'>{label}</span>
+      {/* Label */}
+        <motion.span
+          initial={{ opacity: 0, x: -8 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3 }}
+          className="text-sm font-medium tracking-wide"
+        >
+          {label}
+        </motion.span>
     </NavLink>
   )
 }
