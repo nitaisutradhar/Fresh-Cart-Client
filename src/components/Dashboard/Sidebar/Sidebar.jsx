@@ -40,8 +40,8 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`z-40 md:fixed flex flex-col justify-between bg-white border-r w-64 space-y-6 px-4 py-5 inset-y-0 left-0 transform ${
-          isActive ? '-translate-x-full' : 'translate-x-0'
+        className={`z-40 md:fixed flex flex-col justify-between bg-white border-r w-full md:w-64 space-y-6 px-4 py-5 inset-y-0 left-0 transform ${
+          isActive ? '-translate-x-full h-0 md:h-full' : 'translate-x-0'
         } md:translate-x-0 transition duration-300 ease-in-out shadow-lg`}
       >
         {/* Logo */}
