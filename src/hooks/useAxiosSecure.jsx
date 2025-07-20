@@ -1,33 +1,56 @@
 import axios from 'axios'
-import useAuth from './useAuth'
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
+import { useEffect } from 'react'
+import useAuth from './useAuth'
 
 export const axiosSecure = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
 })
 
+// ✅ Attach interceptors only once
+axiosSecure.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => Promise.reject(error)
+)
+
+axiosSecure.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    // We'll handle logout in hook where we have access to navigate and context
+    return Promise.reject(error)
+  }
+)
+
 const useAxiosSecure = () => {
-  const navigate = useNavigate()
   const { logOut } = useAuth()
+  const navigate = useNavigate()
+
+  // Optional: Handle auth errors globally (on client side)
   useEffect(() => {
-    axiosSecure.interceptors.response.use(
-      res => {
-        return res
-      },
-      async error => {
-        console.log('Error caught from axios interceptor-->', error.response)
-        if (error.response.status === 401 || error.response.status === 403) {
-          // logout
-          logOut()
-          // navigate to login
+    const resInterceptor = axiosSecure.interceptors.response.use(
+      (res) => res,
+      async (error) => {
+        if (error.response?.status === 401 || error.response?.status === 403) {
+          console.error('⛔ Unauthorized request:', error.response)
+          await logOut()
           navigate('/login')
         }
         return Promise.reject(error)
       }
     )
+
+    return () => {
+      // Cleanup the interceptor on unmount
+      axiosSecure.interceptors.response.eject(resInterceptor)
+    }
   }, [logOut, navigate])
+
   return axiosSecure
 }
 
