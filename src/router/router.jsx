@@ -10,6 +10,7 @@ import AddProduct from "@/pages/Dashboard/Vendor/AddProduct";
 import VendorRoute from "@/routes/VendorRoute";
 import ViewMyProducts from "@/pages/Dashboard/Vendor/ViewMyProducts";
 import UpdateProduct from "@/pages/Dashboard/Vendor/UpdateProduct";
+import AddAdvertisement from "@/pages/Dashboard/Vendor/AddAdvertisement";
 
 export const router = createBrowserRouter([
     {
@@ -61,6 +62,15 @@ export const router = createBrowserRouter([
                 <PrivateRoute>
                     <VendorRoute>
                         <UpdateProduct />
+                    </VendorRoute>
+                </PrivateRoute>
+            },
+            {
+                path: '/dashboard/vendor/add-advertisement',
+                element:
+                <PrivateRoute>
+                    <VendorRoute>
+                        <AddAdvertisement />
                     </VendorRoute>
                 </PrivateRoute>
             }
