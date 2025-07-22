@@ -6,8 +6,9 @@ import Home from "@/pages/Home/Home";
 import ErrorPage from "@/pages/shared/ErrorPage/ErrorPage";
 import PrivateRoute from "@/routes/PrivateRoute";
 import DashboardLayout from "@/layouts/DashboardLayout";
-import AddProduct from "@/pages/Dashboard/AddProduct";
+import AddProduct from "@/pages/Dashboard/Vendor/AddProduct";
 import VendorRoute from "@/routes/VendorRoute";
+import ViewMyProducts from "@/pages/Dashboard/Vendor/ViewMyProducts";
 
 export const router = createBrowserRouter([
     {
@@ -41,6 +42,15 @@ export const router = createBrowserRouter([
                 <PrivateRoute>
                     <VendorRoute>
                         <AddProduct />
+                    </VendorRoute>
+                </PrivateRoute>
+            },
+            {
+                path: "/dashboard/vendor/my-products",
+                element: 
+                <PrivateRoute>
+                    <VendorRoute>
+                        <ViewMyProducts />
                     </VendorRoute>
                 </PrivateRoute>
             }
