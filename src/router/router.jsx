@@ -9,6 +9,7 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 import AddProduct from "@/pages/Dashboard/Vendor/AddProduct";
 import VendorRoute from "@/routes/VendorRoute";
 import ViewMyProducts from "@/pages/Dashboard/Vendor/ViewMyProducts";
+import UpdateProduct from "@/pages/Dashboard/Vendor/UpdateProduct";
 
 export const router = createBrowserRouter([
     {
@@ -51,6 +52,15 @@ export const router = createBrowserRouter([
                 <PrivateRoute>
                     <VendorRoute>
                         <ViewMyProducts />
+                    </VendorRoute>
+                </PrivateRoute>
+            },
+            {
+                path: "/dashboard/update-product/:id",
+                element:
+                <PrivateRoute>
+                    <VendorRoute>
+                        <UpdateProduct />
                     </VendorRoute>
                 </PrivateRoute>
             }
