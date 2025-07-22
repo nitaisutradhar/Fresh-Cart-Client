@@ -7,16 +7,19 @@ import { toast } from "react-toastify"
 import { motion } from "framer-motion"
 import { useState } from "react"
 import useAxiosSecure from "@/hooks/useAxiosSecure"
+import useAuth from "@/hooks/useAuth"
 
 const AddAdvertisement = () => {
   const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm()
   const axiosSecure = useAxiosSecure()
   const [uploading, setUploading] = useState(false)
   const [photoURL, setPhotoURL] = useState("")
+  const {user} = useAuth()
 
   const onSubmit = async (data) => {
     try {
       const adData = {
+        vendorEmail: user.email,
         title: data.title,
         description: data.description,
         image: data.image,
