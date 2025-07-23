@@ -30,7 +30,6 @@ const ViewMyProducts = () => {
 
   const handleDelete = async () => {
     try {
-        console.log(selectedProductId)
       await axiosInstance.delete(`/products/${selectedProductId}`);
       toast.success("Product deleted successfully.");
       refetch();

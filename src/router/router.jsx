@@ -16,6 +16,7 @@ import WelcomeDashboard from "@/pages/Dashboard/WelcomeDashboard";
 import AllProducts from "@/pages/All Products/AllProducts";
 import AdminRoute from "@/routes/AdminRoute";
 import AllUsers from "@/pages/Dashboard/Admin/AllUsers";
+import AllProductsAdmin from "@/pages/Dashboard/Admin/AllProductsAdmin";
 
 export const router = createBrowserRouter([
     {
@@ -74,9 +75,7 @@ export const router = createBrowserRouter([
                 path: "/dashboard/update-product/:id",
                 element:
                 <PrivateRoute>
-                    <VendorRoute>
                         <UpdateProduct />
-                    </VendorRoute>
                 </PrivateRoute>
             },
             {
@@ -99,6 +98,15 @@ export const router = createBrowserRouter([
                 <PrivateRoute>
                     <AdminRoute>
                         <AllUsers></AllUsers>
+                    </AdminRoute>
+                </PrivateRoute>
+            },
+            {
+                path: "/dashboard/admin/all-products",
+                element:
+                <PrivateRoute>
+                    <AdminRoute>
+                        <AllProductsAdmin />
                     </AdminRoute>
                 </PrivateRoute>
             }

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import UpdateAdModal from '@/components/Modal/Vendor/UpdateAdModal';
-import ConfirmDeleteModal from '@/components/Modal/Vendor/ConfirmDeleteModal';
+import ConfirmDeleteModal from '@/components/Modal/ConfirmDeleteModal';
 
 const MyAdvertisements = () => {
   const { user } = useAuth();
