@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { useState } from "react";
@@ -77,18 +78,38 @@ const ViewMyProducts = () => {
                 <TableCell>{product.marketName}</TableCell>
                 <TableCell>{new Date(product.date).toLocaleDateString('en-GB')}</TableCell>
                 <TableCell>
-                  <span
+                {product.status === "rejected" ? (
+                    <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                        <span
+                            className="px-2 py-1 rounded-md text-sm font-semibold bg-red-100 text-red-600 cursor-pointer"
+                        >
+                            {product.status}
+                        </span>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                        {product.rejectionFeedback
+                            ? product.rejectionFeedback
+                            : "No feedback provided"}
+                        </TooltipContent>
+                    </Tooltip>
+                    </TooltipProvider>
+                ) : (
+                    <span
                     className={`px-2 py-1 rounded-md text-sm font-semibold ${
-                      product.status === "approved"
+                        product.status === "approved"
                         ? "bg-green-100 text-green-600"
                         : product.status === "pending"
                         ? "bg-yellow-100 text-yellow-600"
                         : "bg-red-100 text-red-600"
                     }`}
-                  >
+                    >
                     {product.status}
-                  </span>
+                    </span>
+                )}
                 </TableCell>
+
                 <TableCell className="flex gap-2 justify-center">
                   <Button
                     className="cursor-pointer"
