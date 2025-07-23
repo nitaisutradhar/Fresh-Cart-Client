@@ -14,6 +14,8 @@ import AddAdvertisement from "@/pages/Dashboard/Vendor/AddAdvertisement";
 import MyAdvertisements from "@/pages/Dashboard/Vendor/MyAdvertisements";
 import WelcomeDashboard from "@/pages/Dashboard/WelcomeDashboard";
 import AllProducts from "@/pages/All Products/AllProducts";
+import AdminRoute from "@/routes/AdminRoute";
+import AllUsers from "@/pages/Dashboard/Admin/AllUsers";
 
 export const router = createBrowserRouter([
     {
@@ -90,6 +92,15 @@ export const router = createBrowserRouter([
                 path: "/dashboard/vendor/my-advertisements",
                 element: 
                 <PrivateRoute><VendorRoute><MyAdvertisements /></VendorRoute></PrivateRoute>
+            },
+            {
+                path: "/dashboard/admin/all-users",
+                element:
+                <PrivateRoute>
+                    <AdminRoute>
+                        <AllUsers></AllUsers>
+                    </AdminRoute>
+                </PrivateRoute>
             }
         ]
     }
