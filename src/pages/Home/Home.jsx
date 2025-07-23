@@ -1,10 +1,16 @@
 import React from 'react';
-import Welcome from '../Welcome/Welcome';
+import BannerSection from './BannerSection';
+import AdvertisementSection from './AdvertisementSection';
+import WhyChooseUsSection from './WhyChooseUsSection';
+import TestimonialsSection from './TestimonialSection';
 
 const Home = () => {
     return (
         <div>
-            <Welcome />
+            <BannerSection />
+            <AdvertisementSection />
+            <WhyChooseUsSection />
+            <TestimonialsSection />
         </div>
     );
 };
