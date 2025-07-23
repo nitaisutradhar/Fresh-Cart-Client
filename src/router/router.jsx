@@ -12,6 +12,7 @@ import ViewMyProducts from "@/pages/Dashboard/Vendor/ViewMyProducts";
 import UpdateProduct from "@/pages/Dashboard/Vendor/UpdateProduct";
 import AddAdvertisement from "@/pages/Dashboard/Vendor/AddAdvertisement";
 import MyAdvertisements from "@/pages/Dashboard/Vendor/MyAdvertisements";
+import WelcomeDashboard from "@/pages/Dashboard/WelcomeDashboard";
 
 export const router = createBrowserRouter([
     {
@@ -40,6 +41,11 @@ export const router = createBrowserRouter([
         <PrivateRoute><DashboardLayout /></PrivateRoute>,
         children: [
             {
+                index: true,
+                path: "/dashboard",
+                element: <WelcomeDashboard />
+            },
+            {
                 path: "/dashboard/vendor/add-product",
                 element: 
                 <PrivateRoute>
@@ -49,14 +55,14 @@ export const router = createBrowserRouter([
                 </PrivateRoute>
             },
             {
-                path: "/dashboard/vendor/my-products",
-                element: 
-                <PrivateRoute>
-                    <VendorRoute>
-                        <ViewMyProducts />
-                    </VendorRoute>
-                </PrivateRoute>
-            },
+                    path: "/dashboard/vendor/my-products",
+                    element: 
+                    <PrivateRoute>
+                        <VendorRoute>
+                            <ViewMyProducts />
+                        </VendorRoute>
+                    </PrivateRoute>
+                },
             {
                 path: "/dashboard/update-product/:id",
                 element:
