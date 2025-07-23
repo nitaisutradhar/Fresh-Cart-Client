@@ -25,7 +25,7 @@ const AddProduct = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      prices: [{ date: "", price: "" }],
+      prices: [{ date: "", price: null }],
     },
   })
 
@@ -126,7 +126,7 @@ const AddProduct = () => {
           <Label>Price per Unit (৳)</Label>
           <Input
             type="number"
-            {...register("price", { required: "Price is required" })}
+            {...register("price", { required: "Price is required", valueAsNumber: true  })}
             placeholder="৳30"
           />
         </div>
@@ -155,7 +155,7 @@ const AddProduct = () => {
                 <Input
                 type="number"
                 placeholder="৳ Price"
-                {...register(`prices.${index}.price`, { required: true })}
+                {...register(`prices.${index}.price`, { required: true, valueAsNumber: true })}
                 className="w-1/2"
                 />
 
@@ -170,7 +170,7 @@ const AddProduct = () => {
             </div>
             ))}
 
-          <Button type="button" onClick={() => append({ date: "", price: "" })}>
+          <Button type="button" onClick={() => append({ date: "", price: null })}>
             ➕ Add Price Entry
           </Button>
         </div>

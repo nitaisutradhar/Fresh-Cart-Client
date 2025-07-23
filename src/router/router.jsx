@@ -13,6 +13,7 @@ import UpdateProduct from "@/pages/Dashboard/Vendor/UpdateProduct";
 import AddAdvertisement from "@/pages/Dashboard/Vendor/AddAdvertisement";
 import MyAdvertisements from "@/pages/Dashboard/Vendor/MyAdvertisements";
 import WelcomeDashboard from "@/pages/Dashboard/WelcomeDashboard";
+import AllProducts from "@/pages/All Products/AllProducts";
 
 export const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
             {
                 path: "/login",
                 Component: Login,
+            },
+            {
+                path: "/all-products",
+                element: <AllProducts />
             }
         ],
     },

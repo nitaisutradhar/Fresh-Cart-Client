@@ -1,28 +1,31 @@
-import { MdAddBox, MdInventory, MdCampaign, MdBarChart } from "react-icons/md";
+import { FaUsers } from "react-icons/fa6";
+import { FaClipboardList } from "react-icons/fa";
+import { RiAdvertisementFill } from "react-icons/ri";
+import { FaCartArrowDown } from "react-icons/fa";
 import MenuItem from "./MenuItem";
 
 const AdminMenu = () => {
   return (
     <div className="space-y-1">
       <MenuItem
-        icon={MdAddBox}
-        label="Add Product"
-        address="/dashboard/admin/add-product"
+        icon={FaUsers}
+        label="All Users"
+        address="/dashboard/admin/all-users"
       />
       <MenuItem
-        icon={MdInventory}
-        label="My Products"
-        address="/dashboard/admin/my-products"
+        icon={FaClipboardList}
+        label="All Products"
+        address="/dashboard/admin/all-products"
       />
       <MenuItem
-        icon={MdCampaign}
-        label="Add Advertisement"
-        address="/dashboard/admin/add-advertisement"
+        icon={RiAdvertisementFill}
+        label="All Advertisements"
+        address="/dashboard/admin/all-advertisements"
       />
       <MenuItem
-        icon={MdBarChart}
-        label="My Advertisements"
-        address="/dashboard/admin/my-advertisements"
+        icon={FaCartArrowDown}
+        label="All Orders"
+        address="/dashboard/admin/all-orders"
       />
     </div>
   );

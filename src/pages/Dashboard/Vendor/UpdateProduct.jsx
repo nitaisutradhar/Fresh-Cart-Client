@@ -119,7 +119,7 @@ const UpdateProduct = () => {
 
         <div>
           <Label className="mb-1 block">💵 Price Per Unit</Label>
-          <Input type="number" {...register("price", { required: true })} />
+          <Input type="number" {...register("price", { required: true, valueAsNumber: true })} />
         </div>
 
         <div>
@@ -142,7 +142,7 @@ const UpdateProduct = () => {
               <Input
                 type="number"
                 placeholder="৳ Price"
-                {...register(`prices.${index}.price`, { required: true })}
+                {...register(`prices.${index}.price`, { required: true, valueAsNumber: true })}
                 className="w-1/2"
               />
               <Button
@@ -157,7 +157,7 @@ const UpdateProduct = () => {
           <Button
             type="button"
             variant="outline"
-            onClick={() => append({ date: "", price: "" })}
+            onClick={() => append({ date: "", price: null })}
             className="mt-2"
           >
             ➕ Add More
