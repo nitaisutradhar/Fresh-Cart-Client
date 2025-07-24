@@ -16,8 +16,6 @@ const DetailsPage = () => {
   const { user } = useAuth();
   const [ role, isRoleLoading ] = useRole();
 
-  console.log(id, role)
-
   const { data: product = {}, isLoading } = useQuery({
     queryKey: ["product", id],
     queryFn: async () => {
@@ -26,6 +24,7 @@ const DetailsPage = () => {
     },
   });
 
+  console.log(product)
   const handleAddToWatchlist = async () => {
     try {
       await axiosSecure.post("/watchlist", {
