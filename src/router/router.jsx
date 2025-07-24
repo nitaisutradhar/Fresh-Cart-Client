@@ -18,6 +18,7 @@ import AdminRoute from "@/routes/AdminRoute";
 import AllUsers from "@/pages/Dashboard/Admin/AllUsers";
 import AllProductsAdmin from "@/pages/Dashboard/Admin/AllProductsAdmin";
 import AllAdvertisements from "@/pages/Dashboard/Admin/AllAdvertisements";
+import DetailsPage from "@/pages/DetailsPage/DetailsPage";
 
 export const router = createBrowserRouter([
     {
@@ -41,6 +42,13 @@ export const router = createBrowserRouter([
             {
                 path: "/all-products",
                 element: <AllProducts />
+            },
+            {
+                path: "/product-details/:id",
+                element: 
+                <PrivateRoute>
+                    <DetailsPage />
+                </PrivateRoute>
             }
         ],
     },

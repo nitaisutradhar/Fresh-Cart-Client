@@ -3,9 +3,11 @@ import useAxios from "@/hooks/useAxios";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router";
 
 const AllProducts = () => {
   const axiosInstance = useAxios();
+  const navigate = useNavigate();
 
   const [sort, setSort] = useState("");
   const [startDate, setStartDate] = useState(null);
@@ -102,6 +104,7 @@ const AllProducts = () => {
             <p>🏪 Market: {product.marketName}</p>
             <p>👨‍🌾 Vendor: {product.vendorName || "N/A"}</p>
             <button
+              onClick={()=> navigate(`/product-details/${product._id}`) }
               className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-1 rounded mt-3"
             >
               🔍 View Details
