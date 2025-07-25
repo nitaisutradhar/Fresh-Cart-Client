@@ -10,12 +10,14 @@ import useRole from "@/hooks/useRole";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import Loading from "@/components/Loading";
 import { useEffect, useState } from "react";
+import BuyModal from "@/components/Modal/BuyModal/BuyModal";
 
 const DetailsPage = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [role, isRoleLoading] = useRole();
+  const [openBuyModal, setOpenBuyModal] = useState(false);
 
   const { data: product = {}, isLoading } = useQuery({
     queryKey: ["product", id],
@@ -72,14 +74,7 @@ const [isInWatchlist, setIsInWatchlist] = useState(false);
 
 
   const handleBuy = async () => {
-    // try {
-    //   const res = await axiosSecure.post("/create-payment-intent", {
-    //     price: parseFloat(product.price),
-    //   });
-    //   window.location.href = res.data.url; // redirect to Stripe checkout
-    // } catch (err) {
-    //   toast.error("Payment failed",err);
-    // }
+    setOpenBuyModal(true)
   };
 
   if (isRoleLoading || isLoading) return <Loading />;
@@ -95,7 +90,7 @@ const [isInWatchlist, setIsInWatchlist] = useState(false);
         />
         <div className="space-y-3">
           <h2 className="text-3xl font-bold">{product.itemName}</h2>
-          <p className="text-gray-700">💵 Price: ৳{product.price}</p>
+          <p className="text-gray-700">💵 Price: ৳{product.price}/Kg</p>
           <p>📅 Date: {new Date(product.date).toLocaleDateString("en-GB")}</p>
           <p>🏪 Market: {product.marketName}</p>
           <p>📃 Description: {product.description}</p>
@@ -130,6 +125,10 @@ const [isInWatchlist, setIsInWatchlist] = useState(false);
         <ReviewForm productId={product._id} />
         <ReviewsList productId={product._id} />
       </div>
+      {/* Buy MOdal */}
+      {openBuyModal && (
+        <BuyModal product={product} onClose={() => setOpenBuyModal(false)} />
+        )}
     </div>
   );
 };
