@@ -20,6 +20,7 @@ import AllProductsAdmin from "@/pages/Dashboard/Admin/AllProductsAdmin";
 import AllAdvertisements from "@/pages/Dashboard/Admin/AllAdvertisements";
 import DetailsPage from "@/pages/DetailsPage/DetailsPage";
 import AllOrders from "@/pages/Dashboard/Admin/AllOrders";
+import MyOrders from "@/pages/Dashboard/User/MyOrders";
 
 export const router = createBrowserRouter([
     {
@@ -137,6 +138,10 @@ export const router = createBrowserRouter([
                         <AllOrders />
                     </AdminRoute>
                 </PrivateRoute>
+            },
+            {
+                path: "/dashboard/user/orders",
+                element:<PrivateRoute><MyOrders /></PrivateRoute>
             }
         ]
     }
