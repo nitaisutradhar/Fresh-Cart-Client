@@ -21,6 +21,7 @@ import AllAdvertisements from "@/pages/Dashboard/Admin/AllAdvertisements";
 import DetailsPage from "@/pages/DetailsPage/DetailsPage";
 import AllOrders from "@/pages/Dashboard/Admin/AllOrders";
 import MyOrders from "@/pages/Dashboard/User/MyOrders";
+import ManageWatchlist from "@/pages/Dashboard/User/ManageWatchList";
 
 export const router = createBrowserRouter([
     {
@@ -142,6 +143,13 @@ export const router = createBrowserRouter([
             {
                 path: "/dashboard/user/orders",
                 element:<PrivateRoute><MyOrders /></PrivateRoute>
+            },
+            {
+                path: "/dashboard/user/watchlist",
+                element:
+                <PrivateRoute>
+                    <ManageWatchlist />
+                </PrivateRoute>
             }
         ]
     }

@@ -55,17 +55,19 @@ const [isInWatchlist, setIsInWatchlist] = useState(false);
   const handleAddToWatchlist = async () => {
     try {
       if (isInWatchlist) {
-        toast.info("✅ This product is already in your watchlist.");
+        toast.info("This product is already in your watchlist.");
         return;
       }
 
       await axiosSecure.post("/watchlist", {
         productId: product._id,
         userEmail: user.email,
+        productName: product.itemName,
+        marketName: product.marketName,
         addedAt: new Date(),
       });
 
-      toast.success("✅ Added to your watchlist.");
+      toast.success("Added to your watchlist.");
       setIsInWatchlist(true);
     } catch (error) {
       toast.error("❌ Failed to add to watchlist.",error);
