@@ -1,23 +1,59 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import useAuth from "@/hooks/useAuth";
+import CheckoutForm from "@/components/Form/CheckoutForm";
 
-const BuyModal = ({ product, onClose }) => {
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK_KEY);
+const BuyModal = ({ product, onClose, fetchProduct }) => {
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
+  const {user } = useAuth()
+   const [orderData, setOrderData] = useState({
+    vendor: {
+        name: product.vendorName,
+        email: product.vendorEmail,
+    },
+    productId: product._id,
+    quantity: 1,
+    price: product.price,
+    plantName: product.itemName,
+    plantImage: product.image,
+    marketName: product.marketName
+  })
+
+  useEffect(() => {
+    if (user)
+      setOrderData(prev => {
+        return {
+          ...prev,
+          customer: {
+            name: user?.displayName,
+            email: user?.email,
+            image: user?.photoURL,
+          },
+        }
+      })
+  }, [user])
 
   useEffect(() => {
     const unitPrice = parseFloat(product.price) || 0;
     setTotalPrice(quantity * unitPrice);
+
+    setOrderData(prev =>{
+        return {
+            ...prev,
+            quantity,
+            price: quantity * unitPrice
+        }
+    })
   }, [quantity, product.price]);
 
-  const handleBuy = () => {
-    // 👉 Stripe Checkout logic or database purchase saving here
-    console.log("Buying", quantity, "units for total price", totalPrice);
-    onClose();
-  };
-
+  console.log(orderData)
   return (
     <Dialog open onOpenChange={onClose}>
       <DialogContent className="max-w-md space-y-4">
@@ -44,14 +80,12 @@ const BuyModal = ({ product, onClose }) => {
 
         <p className="font-semibold mt-2">💰 Total Price: ৳{totalPrice.toFixed(2)}</p>
 
-        <DialogFooter className="mt-4 flex justify-end gap-2">
-          <Button variant="ghost" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button onClick={handleBuy} className="bg-green-600 hover:bg-green-700 text-white">
-            ✅ Buy Now
-          </Button>
-        </DialogFooter>
+        {/* Stripe Checkout Form */}
+        <div>
+            <Elements stripe={stripePromise}>
+            <CheckoutForm totalPrice={totalPrice} closeModal={onClose} orderData={orderData} fetchProduct={fetchProduct} />
+            </Elements>
+        </div>
       </DialogContent>
     </Dialog>
   );

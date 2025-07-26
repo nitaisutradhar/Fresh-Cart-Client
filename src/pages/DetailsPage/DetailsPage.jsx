@@ -19,7 +19,7 @@ const DetailsPage = () => {
   const [role, isRoleLoading] = useRole();
   const [openBuyModal, setOpenBuyModal] = useState(false);
 
-  const { data: product = {}, isLoading } = useQuery({
+  const { data: product = {}, isLoading, refetch } = useQuery({
     queryKey: ["product", id],
     queryFn: async () => {
       const { data } = await axiosSecure.get(`/products/${id}`);
@@ -127,7 +127,7 @@ const [isInWatchlist, setIsInWatchlist] = useState(false);
       </div>
       {/* Buy MOdal */}
       {openBuyModal && (
-        <BuyModal product={product} onClose={() => setOpenBuyModal(false)} />
+        <BuyModal product={product} fetchProduct={refetch} onClose={() => setOpenBuyModal(false)} />
         )}
     </div>
   );
