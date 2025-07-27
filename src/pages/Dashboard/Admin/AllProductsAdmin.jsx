@@ -14,9 +14,9 @@ const AllProductsAdmin = () => {
   const [rejectionProduct, setRejectionProduct] = useState(null);
 
   const { data: products = [], refetch } = useQuery({
-    queryKey: ["admin-products"],
+    queryKey: ["all-admin-products"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/all-products");
+      const { data } = await axiosSecure("/all-admin-products");
       return data;
     },
   });

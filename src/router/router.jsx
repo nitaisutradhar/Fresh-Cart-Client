@@ -25,140 +25,163 @@ import ManageWatchlist from "@/pages/Dashboard/User/ManageWatchList";
 import PriceTrend from "@/pages/Dashboard/User/PriceTrend";
 
 export const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    Component: MainLayout,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
         path: "/",
-        Component: MainLayout,
-        errorElement: <ErrorPage />,
-        children: [
-            {
-                index: true,
-                path: "/",
-                Component: Home,
-            },
-            {
-                path: "/signup",
-                Component: SignUp,
-            },
-            {
-                path: "/login",
-                Component: Login,
-            },
-            {
-                path: "/all-products",
-                element: <AllProducts />
-            },
-            {
-                path: "/product-details/:id",
-                element: 
-                <PrivateRoute>
-                    <DetailsPage />
-                </PrivateRoute>
-            }
-        ],
-    },
-    {
+        Component: Home,
+      },
+      {
+        path: "/signup",
+        Component: SignUp,
+      },
+      {
+        path: "/login",
+        Component: Login,
+      },
+      {
+        path: "/all-products",
+        element: <AllProducts />,
+      },
+      {
+        path: "/product-details/:id",
+        element: (
+          <PrivateRoute>
+            <DetailsPage />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/dashboard",
-        element: 
-        <PrivateRoute><DashboardLayout /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <DashboardLayout />
+          </PrivateRoute>
+        ),
         children: [
-            {
-                index: true,
-                path: "/dashboard",
-                element: <WelcomeDashboard />
-            },
-            {
-                path: "/dashboard/vendor/add-product",
-                element: 
-                <PrivateRoute>
-                    <VendorRoute>
-                        <AddProduct />
-                    </VendorRoute>
-                </PrivateRoute>
-            },
-            {
-                    path: "/dashboard/vendor/my-products",
-                    element: 
-                    <PrivateRoute>
-                        <VendorRoute>
-                            <ViewMyProducts />
-                        </VendorRoute>
-                    </PrivateRoute>
-                },
-            {
-                path: "/dashboard/update-product/:id",
-                element:
-                <PrivateRoute>
-                        <UpdateProduct />
-                </PrivateRoute>
-            },
-            {
-                path: '/dashboard/vendor/add-advertisement',
-                element:
-                <PrivateRoute>
-                    <VendorRoute>
-                        <AddAdvertisement />
-                    </VendorRoute>
-                </PrivateRoute>
-            },
-            {
-                path: "/dashboard/vendor/my-advertisements",
-                element: 
-                <PrivateRoute><VendorRoute><MyAdvertisements /></VendorRoute></PrivateRoute>
-            },
-            {
-                path: "/dashboard/admin/all-users",
-                element:
-                <PrivateRoute>
-                    <AdminRoute>
-                        <AllUsers></AllUsers>
-                    </AdminRoute>
-                </PrivateRoute>
-            },
-            {
-                path: "/dashboard/admin/all-products",
-                element:
-                <PrivateRoute>
-                    <AdminRoute>
-                        <AllProductsAdmin />
-                    </AdminRoute>
-                </PrivateRoute>
-            },
-            {
-                path: "/dashboard/admin/all-advertisements",
-                element:
-                <PrivateRoute>
-                    <AdminRoute>
-                        <AllAdvertisements />
-                    </AdminRoute>
-                </PrivateRoute>
-            },
-            {
-                path: "/dashboard/admin/all-orders",
-                element:
-                <PrivateRoute>
-                    <AdminRoute>
-                        <AllOrders />
-                    </AdminRoute>
-                </PrivateRoute>
-            },
-            {
-                path: "/dashboard/user/orders",
-                element:<PrivateRoute><MyOrders /></PrivateRoute>
-            },
-            {
-                path: "/dashboard/user/watchlist",
-                element:
-                <PrivateRoute>
-                    <ManageWatchlist />
-                </PrivateRoute>
-            },
-            {
-                path: "/dashboard/user/price-trends",
-                element:
-                <PrivateRoute>
-                    <PriceTrend />
-                </PrivateRoute>
-            }
-        ]
-    }
+          {
+            index: true,
+            path: "/dashboard",
+            element: <WelcomeDashboard />,
+          },
+          {
+            path: "/dashboard/vendor/add-product",
+            element: (
+              <PrivateRoute>
+                <VendorRoute>
+                  <AddProduct />
+                </VendorRoute>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/vendor/my-products",
+            element: (
+              <PrivateRoute>
+                <VendorRoute>
+                  <ViewMyProducts />
+                </VendorRoute>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/update-product/:id",
+            element: (
+              <PrivateRoute>
+                <UpdateProduct />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/vendor/add-advertisement",
+            element: (
+              <PrivateRoute>
+                <VendorRoute>
+                  <AddAdvertisement />
+                </VendorRoute>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/vendor/my-advertisements",
+            element: (
+              <PrivateRoute>
+                <VendorRoute>
+                  <MyAdvertisements />
+                </VendorRoute>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/admin/all-users",
+            element: (
+              <PrivateRoute>
+                <AdminRoute>
+                  <AllUsers></AllUsers>
+                </AdminRoute>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/admin/all-products",
+            element: (
+              <PrivateRoute>
+                <AdminRoute>
+                  <AllProductsAdmin />
+                </AdminRoute>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/admin/all-advertisements",
+            element: (
+              <PrivateRoute>
+                <AdminRoute>
+                  <AllAdvertisements />
+                </AdminRoute>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/admin/all-orders",
+            element: (
+              <PrivateRoute>
+                <AdminRoute>
+                  <AllOrders />
+                </AdminRoute>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/user/orders",
+            element: (
+              <PrivateRoute>
+                <MyOrders />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/user/watchlist",
+            element: (
+              <PrivateRoute>
+                <ManageWatchlist />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "/dashboard/user/price-trends",
+            element: (
+              <PrivateRoute>
+                <PriceTrend />
+              </PrivateRoute>
+            ),
+          },
+        ],
+      },
+    ],
+  },
 ]);

@@ -1,17 +1,14 @@
 import { useState } from 'react'
 import { GrLogout } from 'react-icons/gr'
-import { FcSettings } from 'react-icons/fc'
-import { AiOutlineBars } from 'react-icons/ai'
 
-import MenuItem from './Menu/MenuItem'
 import AdminMenu from './Menu/AdminMenu'
 import UserMenu from './Menu/UserMenu'
 import VendorMenu from './Menu/VendorMenu'
 
-import { NavLink } from 'react-router'
 import useAuth from '@/hooks/useAuth'
 import useRole from '@/hooks/useRole'
 import Loading from '@/components/Loading'
+import { ListCollapse } from 'lucide-react'
 
 const Sidebar = () => {
   const { logOut } = useAuth()
@@ -23,34 +20,23 @@ const Sidebar = () => {
   if (isRoleLoading) return <Loading />
 
   return (
-    <>
+    <div className='relative'>
       {/* Small screen top bar */}
-      <div className='bg-muted flex justify-between md:hidden px-4 py-3 shadow-sm'>
-        <NavLink to="/" className="flex items-center gap-2 text-xl font-bold text-primary">
-          <img src="/logo.png" alt="FreshCart Logo" className="h-8 w-8" />
-          <span>FreshCart</span>
-        </NavLink>
+      <div className='absolute -bottom-5 z-50 bg-muted flex justify-between md:hidden px-3 py-2 rounded-xl shadow-sm'>
         <button
           onClick={handleToggle}
           className='text-primary focus:outline-none text-2xl'
         >
-          <AiOutlineBars />
+          <ListCollapse />
         </button>
       </div>
 
       {/* Sidebar */}
       <div
-        className={`z-40 md:fixed flex flex-col justify-between bg-white border-r w-full md:w-64 space-y-6 px-4 py-5 inset-y-0 left-0 transform ${
+        className={`z-40 md:absolute flex flex-col justify-between md:min-h-screen bg-white border-r w-full md:w-64 space-y-6 px-4 py-5 inset-y-0 left-0 transform ${
           isActive ? '-translate-x-full h-0 md:h-full' : 'translate-x-0'
         } md:translate-x-0 transition duration-300 ease-in-out shadow-lg`}
       >
-        {/* Logo */}
-        <div className="hidden md:flex items-center gap-2 justify-center py-2 bg-muted rounded-lg shadow-sm">
-          <NavLink to="/" className="flex items-center gap-2 text-xl font-bold text-primary">
-            <img src="/logo.png" alt="FreshCart Logo" className="h-8 w-8" />
-            <span>FreshCart</span>
-          </NavLink>
-        </div>
 
         {/* Navigation */}
         <div className='flex flex-col justify-between flex-1 mt-6'>
@@ -72,7 +58,7 @@ const Sidebar = () => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

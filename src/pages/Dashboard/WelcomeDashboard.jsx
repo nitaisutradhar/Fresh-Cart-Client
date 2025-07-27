@@ -28,7 +28,7 @@ const WelcomeDashboard = () => {
 
   return (
     <motion.div
-      className="flex flex-col justify-center items-center h-full text-center px-4"
+      className="flex flex-col justify-center items-center h-full mt-8 text-center px-4"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}

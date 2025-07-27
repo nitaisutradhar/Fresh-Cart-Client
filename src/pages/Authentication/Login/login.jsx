@@ -28,7 +28,6 @@ const { signIn, signInWithGoogle, loading, user } = useAuth()
 const onSubmit = async (data) => {
   try {
     const { email, password } = data
-    console.log("Login data:", email, password)
    const result = await signIn(email, password)
     const userData = {
         name: result?.user?.displayName,
