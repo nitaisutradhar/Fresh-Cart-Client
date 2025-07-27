@@ -53,7 +53,6 @@ const BuyModal = ({ product, onClose, fetchProduct }) => {
     })
   }, [quantity, product.price]);
 
-  console.log(orderData)
   return (
     <Dialog open onOpenChange={onClose}>
       <DialogContent className="max-w-md space-y-4">

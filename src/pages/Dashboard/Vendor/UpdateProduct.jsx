@@ -68,7 +68,6 @@ const UpdateProduct = () => {
   });
 
   const onSubmit = (data) => {
-    console.log("updated data", data)
     mutation.mutate(data);
   };
 

@@ -84,7 +84,6 @@ const CheckoutForm = ({ totalPrice, closeModal, orderData, fetchProduct }) => {
       orderData.transactionId = result?.paymentIntent?.id
       try {
         const { data } = await axiosSecure.post('/order', orderData)
-        console.log(data)
         if (data?.insertedId) {
           toast.success('Order Placed Successfully!')
         }

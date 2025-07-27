@@ -24,7 +24,6 @@ const ManageWatchlist = () => {
   });
 
   const handleDelete = async (id) => {
-    console.log(id)
     try {
       await axiosSecure.delete(`/watchlist/${id}`);
       toast.success("✅ Removed from watchlist");
