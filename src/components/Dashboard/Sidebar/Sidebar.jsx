@@ -63,11 +63,6 @@ const Sidebar = () => {
 
         {/* Bottom actions */}
         <div className="space-y-2">
-          <MenuItem
-            icon={FcSettings}
-            label='Profile'
-            address='/dashboard/profile'
-          />
           <button
             onClick={logOut}
             className='flex w-full items-center px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 rounded-md transition-colors duration-300'

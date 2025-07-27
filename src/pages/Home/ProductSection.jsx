@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxios from "@/hooks/useAxios";
 import Loading from "@/components/Loading";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const ProductSection = () => {
   const axiosInstance = useAxios();
