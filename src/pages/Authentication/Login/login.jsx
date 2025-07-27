@@ -34,8 +34,7 @@ const onSubmit = async (data) => {
         email: result?.user?.email,
         image: result?.user?.photoURL,
       }
-      const {data: userRes} = axios.post(`${import.meta.env.VITE_API_URL}/user`,userData)
-      console.log(userRes)
+       axios.post(`${import.meta.env.VITE_API_URL}/user`,userData)
       navigate(from, {replace: true})
     toast.success("Logged in successfully!")
     navigate("/")
@@ -73,8 +72,7 @@ const handleGoogleSignIn = async () => {
         email: result?.user?.email,
         image: result?.user?.photoURL,
       }
-      const {data: userRes} = axios.post(`${import.meta.env.VITE_API_URL}/user`,userData)
-      console.log(userRes)
+      axios.post(`${import.meta.env.VITE_API_URL}/user`,userData)
       navigate(from, {replace: true})
     toast.success("Logged in successfully!")
   } catch (err) {

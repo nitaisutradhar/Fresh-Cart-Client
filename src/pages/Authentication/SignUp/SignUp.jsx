@@ -82,8 +82,7 @@ const SignUp = () => {
           email: result.user.email,
           image: result.user.photoURL || "https://i.pravatar.cc/150?img=3", // Default image if none provided
         };
-        const response = await axiosInstance.post("/user", userData);
-        console.log("User created and save in mongodb res:", response);
+        await axiosInstance.post("/user", userData);
       }
       toast.success("Signed in with Google!");
       navigate("/");
