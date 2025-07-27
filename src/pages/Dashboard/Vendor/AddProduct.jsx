@@ -48,7 +48,6 @@ const AddProduct = () => {
       console.error(err)
     },
   })
-  console.log(mutation)
 
   const onSubmit = (data) => {
     const productData = {

@@ -3,14 +3,14 @@ import './checkoutForm.css'
 import { useEffect, useState } from 'react'
 import { ClipLoader } from 'react-spinners'
 import useAuth from '@/hooks/useAuth'
-// import useAxiosSecure from '@/hooks/useAxiosSecure'
+import useAxiosSecure from '@/hooks/useAxiosSecure'
 import { toast } from 'react-toastify'
 import { DialogFooter } from '../ui/dialog'
 import { Button } from '../ui/button'
 import useAxios from '@/hooks/useAxios'
 const CheckoutForm = ({ totalPrice, closeModal, orderData, fetchProduct }) => {
   const { user } = useAuth()
-//   const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure()
   const axiosInstance = useAxios()
   const stripe = useStripe()
   const elements = useElements()
@@ -83,7 +83,7 @@ const CheckoutForm = ({ totalPrice, closeModal, orderData, fetchProduct }) => {
       // save order data in db
       orderData.transactionId = result?.paymentIntent?.id
       try {
-        const { data } = await axiosInstance.post('/order', orderData)
+        const { data } = await axiosSecure.post('/order', orderData)
         console.log(data)
         if (data?.insertedId) {
           toast.success('Order Placed Successfully!')

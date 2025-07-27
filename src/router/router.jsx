@@ -22,6 +22,7 @@ import DetailsPage from "@/pages/DetailsPage/DetailsPage";
 import AllOrders from "@/pages/Dashboard/Admin/AllOrders";
 import MyOrders from "@/pages/Dashboard/User/MyOrders";
 import ManageWatchlist from "@/pages/Dashboard/User/ManageWatchList";
+import PriceTrend from "@/pages/Dashboard/User/PriceTrend";
 
 export const router = createBrowserRouter([
     {
@@ -149,6 +150,13 @@ export const router = createBrowserRouter([
                 element:
                 <PrivateRoute>
                     <ManageWatchlist />
+                </PrivateRoute>
+            },
+            {
+                path: "/dashboard/user/price-trends",
+                element:
+                <PrivateRoute>
+                    <PriceTrend />
                 </PrivateRoute>
             }
         ]
