@@ -96,6 +96,7 @@ const Navbar = () => {
         </>
       ) : (
         <>
+          {/* Dashboard Link */}
           <NavLink to={dashboardRoute}>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button variant={"outline"} className="cursor-pointer bg-transparent text-white hover:bg-emerald-500">
