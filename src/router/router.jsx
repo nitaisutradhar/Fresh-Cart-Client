@@ -24,6 +24,7 @@ import MyOrders from "@/pages/Dashboard/User/MyOrders";
 import ManageWatchlist from "@/pages/Dashboard/User/ManageWatchList";
 import PriceTrend from "@/pages/Dashboard/User/PriceTrend";
 import About from "@/pages/About/about";
+import ContactUs from "@/pages/Contact/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "/about",
         Component: About,
+      },
+      {
+        path: "/contact",
+        Component: ContactUs,
       },
       {
         path: "/all-products",
