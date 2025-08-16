@@ -35,8 +35,8 @@ const SignUp = () => {
         // Save user data to your database
         const userData = {
           name: name,
-          email: result.user.email,
-          image: result.user.photoURL || "https://i.pravatar.cc/150?img=3", // Default image if none provided
+          email: email,
+          image: photo || "https://i.pravatar.cc/150?img=3", // Default image if none provided
         };
          await axiosInstance.post("/user", userData);
       }

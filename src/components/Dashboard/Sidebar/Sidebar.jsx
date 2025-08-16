@@ -9,11 +9,13 @@ import useAuth from '@/hooks/useAuth'
 import useRole from '@/hooks/useRole'
 import Loading from '@/components/Loading'
 import { ListCollapse } from 'lucide-react'
+import { useNavigate } from 'react-router'
 
 const Sidebar = () => {
-  const { logOut } = useAuth()
+  const { logOut, user } = useAuth()
   const [isActive, setIsActive] = useState(false)
   const [role, isRoleLoading] = useRole()
+  const navigate = useNavigate()
 
   const handleToggle = () => setIsActive(!isActive)
 
@@ -49,6 +51,21 @@ const Sidebar = () => {
 
         {/* Bottom actions */}
         <div className="space-y-2">
+          {/* User Info */}
+          <button
+            className='flex items-center gap-2 px-4 py-2 w-full text-gray-700 hover:bg-green-100 rounded-md transition-colors duration-300'
+            onClick={() => navigate('/dashboard/profile')}
+          >
+            <img
+              src={user?.photoURL || 'https://i.pravatar.cc/40?img=3'}
+              alt={user?.displayName || 'User'}
+              className='w-8 h-8 rounded-full object-cover'
+            />
+            <span className='font-medium'>Profile</span>
+          </button>
+          {/* Divider */}
+          <hr className='border-gray-200' />
+          {/* Logout Button */}
           <button
             onClick={logOut}
             className='flex w-full items-center px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 rounded-md transition-colors duration-300'

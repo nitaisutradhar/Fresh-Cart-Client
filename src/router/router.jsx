@@ -25,6 +25,8 @@ import ManageWatchlist from "@/pages/Dashboard/User/ManageWatchList";
 import PriceTrend from "@/pages/Dashboard/User/PriceTrend";
 import About from "@/pages/About/about";
 import ContactUs from "@/pages/Contact/ContactUs";
+import { User } from "lucide-react";
+import UserProfile from "@/pages/Dashboard/UserProfile";
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +79,14 @@ export const router = createBrowserRouter([
             index: true,
             path: "/dashboard",
             element: <WelcomeDashboard />,
+          },
+          {
+            path: "/dashboard/profile",
+            element: (
+              <PrivateRoute>
+                <UserProfile />
+              </PrivateRoute>
+            ),
           },
           {
             path: "/dashboard/vendor/add-product",

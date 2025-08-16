@@ -153,6 +153,7 @@ export default function BannerSection() {
               className="cursor-pointer group border-2 border-white/30 backdrop-blur-sm text-white hover:bg-white/10 px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/about')}
             >
               Learn More
               <motion.span
