@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router';
 
 export default function BannerSection() {
+  const navigate = useNavigate();
   return (
     <motion.section 
       className="relative h-[700px] overflow-hidden"
@@ -133,9 +135,10 @@ export default function BannerSection() {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <motion.button 
-              className="group bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="cursor-pointer group bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-105"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/all-products')}
             >
               <ShoppingCart size={24} />
               <span>Explore Markets</span>
@@ -147,7 +150,7 @@ export default function BannerSection() {
             </motion.button>
             
             <motion.button 
-              className="group border-2 border-white/30 backdrop-blur-sm text-white hover:bg-white/10 px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2"
+              className="cursor-pointer group border-2 border-white/30 backdrop-blur-sm text-white hover:bg-white/10 px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

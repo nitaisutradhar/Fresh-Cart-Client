@@ -119,7 +119,7 @@ const AllProducts = () => {
             <p>👨‍🌾 Vendor: {product.vendorName || "N/A"}</p>
             <button
               onClick={() => navigate(`/product-details/${product._id}`)}
-              className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-1 rounded mt-3"
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded mt-3"
             >
               🔍 View Details
             </button>
