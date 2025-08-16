@@ -98,7 +98,7 @@ const Navbar = () => {
         <>
           <NavLink to={dashboardRoute}>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="cursor-pointer bg-purple-600 text-white hover:bg-purple-500">
+              <Button variant={"outline"} className="cursor-pointer bg-transparent text-white hover:bg-emerald-500">
                 Dashboard
               </Button>
             </motion.div>
@@ -121,8 +121,8 @@ const Navbar = () => {
 
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button
-              variant="destructive"
-              className="cursor-pointer bg-red-600 hover:bg-red-500 text-white"
+              variant="outline"
+              className="cursor-pointer bg-transparent hover:bg-red-500 text-white"
               onClick={handleLogout}
             >
               Logout
