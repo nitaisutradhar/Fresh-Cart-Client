@@ -203,7 +203,7 @@ const Navbar = () => {
                   whileTap={{ scale: 0.95 }}
                   className="w-full"
                 >
-                  <Button className="w-full cursor-pointer bg-purple-600 text-white hover:bg-purple-500">
+                  <Button variant={"outline"} className="w-full cursor-pointer bg-transparent text-white hover:bg-emerald-500">
                     Dashboard
                   </Button>
                 </motion.div>
@@ -215,8 +215,8 @@ const Navbar = () => {
                 className="w-full"
               >
                 <Button
-                  variant="destructive"
-                  className="w-full cursor-pointer bg-red-600 hover:bg-red-500 text-white"
+                  variant="outline"
+                  className="w-full cursor-pointer bg-transparent hover:bg-red-500 text-white"
                   onClick={() => {
                     setIsOpen(false);
                     handleLogout();
