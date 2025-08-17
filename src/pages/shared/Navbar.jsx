@@ -12,6 +12,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { toast } from "react-toastify";
+import { ModeToggle } from "@/components/Toggle/mode-toggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,6 +76,8 @@ const Navbar = () => {
           {label}
         </NavLink>
       ))}
+      {/* Conditional Buttons */}
+      <ModeToggle />
 
       {!isLoggedIn ? (
         <>
