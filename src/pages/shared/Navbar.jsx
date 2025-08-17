@@ -76,8 +76,6 @@ const Navbar = () => {
           {label}
         </NavLink>
       ))}
-      {/* Conditional Buttons */}
-      <ModeToggle />
 
       {!isLoggedIn ? (
         <>
@@ -134,10 +132,12 @@ const Navbar = () => {
           </motion.div>
         </>
       )}
+      <ModeToggle />
     </nav>
 
     {/* Mobile Toggle */}
-    <div className="md:hidden z-50">
+    <div className="md:hidden flex items-center gap-3 z-50">
+      <ModeToggle />
       <motion.button
         whileTap={{ scale: 0.9, rotate: 90 }}
         onClick={() => setIsOpen(!isOpen)}

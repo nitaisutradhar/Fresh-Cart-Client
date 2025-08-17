@@ -16,22 +16,26 @@ export function ThemeProvider({
   })
 
   useEffect(() => {
-    const root = window.document.documentElement
-
-    root.classList.remove("light", "dark")
-
+    const root = window.document.documentElement;
+    root.classList.remove("light", "dark");
+  
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light"
-
-      root.classList.add(systemTheme)
-      return
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const systemTheme = mediaQuery.matches ? "dark" : "light";
+      root.classList.add(systemTheme);
+  
+      const handleChange = (e) => {
+        const newSystemTheme = e.matches ? "dark" : "light";
+        root.classList.remove("light", "dark");
+        root.classList.add(newSystemTheme);
+      };
+  
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    } else {
+      root.classList.add(theme);
     }
-
-    root.classList.add(theme)
-  }, [theme])
+  }, [theme]);
 
   const value = {
     theme,
@@ -48,6 +52,7 @@ export function ThemeProvider({
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTheme = () => {
   const context = useContext(ThemeProviderContext)
   if (context === undefined) {
