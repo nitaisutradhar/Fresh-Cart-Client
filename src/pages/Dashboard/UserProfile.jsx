@@ -54,7 +54,7 @@ const UserProfile = () => {
           src={user?.image}
           alt={user?.name}
           whileHover={{ scale: 1.05 }}
-          className="w-32 h-32 rounded-full object-cover shadow-md border-4 border-green-200 dark:border-green-700"
+          className="w-32 h-32 rounded-full object-cover shadow-md border-4 border-green-200 dark:border-green-700 transition-transform duration-300"
         />
 
         {/* Profile Info */}

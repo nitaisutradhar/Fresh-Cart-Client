@@ -59,7 +59,7 @@ const Sidebar = () => {
             <img
               src={user?.photoURL || 'https://i.pravatar.cc/40?img=3'}
               alt={user?.displayName || 'User'}
-              className='w-8 h-8 rounded-full object-cover'
+              className='w-8 h-8 rounded-full object-cover border border-gray-300 dark:border-gray-600'
             />
             <span className='font-medium'>Profile</span>
           </button>

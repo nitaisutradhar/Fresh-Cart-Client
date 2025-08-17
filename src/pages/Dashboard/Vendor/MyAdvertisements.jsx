@@ -37,7 +37,7 @@ const MyAdvertisements = () => {
       <h2 className="text-2xl font-bold mb-4">📢 My Advertisements</h2>
       <div className="overflow-x-auto">
         <table className="w-full border border-gray-300">
-          <thead className="bg-gray-200">
+          <thead className="bg-gray-200 dark:bg-gray-800">
             <tr>
               <th className="p-3">Ad Title</th>
               <th className="p-3">Description</th>

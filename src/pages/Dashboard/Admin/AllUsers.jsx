@@ -37,7 +37,7 @@ const AllUsers = () => {
       <h2 className="text-2xl font-bold mb-4">👥 All Users</h2>
       <div className="overflow-x-auto">
         <table className="w-full border">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>
               <th className="p-3">Name</th>
               <th className="p-3">Email</th>

@@ -43,7 +43,7 @@ const AllAdvertisements = () => {
       <h2 className="text-2xl font-bold mb-4">📢 All Advertisements</h2>
       <div className="overflow-x-auto">
         <table className="w-full border border-gray-300">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>
               <th className="p-3">Title</th>
               <th className="p-3">Description</th>

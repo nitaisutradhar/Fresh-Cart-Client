@@ -21,7 +21,7 @@ const AllOrders = () => {
       <h2 className="text-3xl font-bold mb-6">🛒 All Orders (Admin View)</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-100 dark:bg-gray-800">
             <tr className="text-left">
               <th className="p-3">🖼️ Product</th>
               <th className="p-3">🥬 Plant</th>
@@ -36,7 +36,7 @@ const AllOrders = () => {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr key={order._id} className="border-t hover:bg-gray-50">
+              <tr key={order._id} className="border-t hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                 <td className="p-3">
                   <img
                     src={order.plantImage}
