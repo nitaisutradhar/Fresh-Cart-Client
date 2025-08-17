@@ -10,8 +10,8 @@ const MenuItem = ({ label, address, icon: Icon}) => {
       className={({ isActive }) =>
         `group relative flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-300 ${
           isActive
-            ? "bg-primary/10 text-primary font-semibold"
-            : "text-gray-600 hover:bg-emerald-50 hover:text-emerald-700"
+            ? 'bg-primary/10 text-primary font-semibold'
+            : 'text-gray-600 dark:text-muted-foreground hover:bg-emerald-50 dark:hover:bg-muted hover:text-emerald-700 dark:hover:text-primary'
         }`
       }
     >

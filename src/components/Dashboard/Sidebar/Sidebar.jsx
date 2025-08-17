@@ -35,7 +35,7 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`z-40 md:absolute flex flex-col justify-between md:min-h-screen bg-white border-r w-full md:w-64 space-y-6 px-4 py-5 inset-y-0 left-0 transform ${
+        className={`z-40 md:absolute flex flex-col justify-between md:min-h-screen bg-white dark:bg-card border-r dark:border-border w-full md:w-64 space-y-6 px-4 py-5 inset-y-0 left-0 transform ${
           isActive ? '-translate-x-full h-0 md:h-full' : 'translate-x-0'
         } md:translate-x-0 transition duration-300 ease-in-out shadow-lg`}
       >
@@ -53,7 +53,7 @@ const Sidebar = () => {
         <div className="space-y-2">
           {/* User Info */}
           <button
-            className='flex items-center gap-2 px-4 py-2 w-full text-gray-700 hover:bg-green-100 rounded-md transition-colors duration-300'
+            className='flex items-center gap-2 px-4 py-2 w-full text-gray-700 dark:text-foreground hover:bg-green-100 dark:hover:bg-muted rounded-md transition-colors duration-300'
             onClick={() => navigate('/dashboard/profile')}
           >
             <img
@@ -64,11 +64,11 @@ const Sidebar = () => {
             <span className='font-medium'>Profile</span>
           </button>
           {/* Divider */}
-          <hr className='border-gray-200' />
+          <hr className='border-gray-200 dark:border-border' />
           {/* Logout Button */}
           <button
             onClick={logOut}
-            className='flex w-full items-center px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 rounded-md transition-colors duration-300'
+            className='flex w-full items-center px-4 py-2 text-red-600 dark:text-destructive hover:bg-red-50 dark:hover:bg-destructive/10 hover:text-red-700 dark:hover:text-destructive rounded-md transition-colors duration-300'
           >
             <GrLogout className='w-5 h-5' />
             <span className='ml-3 font-medium'>Logout</span>

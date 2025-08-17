@@ -22,11 +22,11 @@ const MyOrders = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-6 max-w-6xl mx-auto text-gray-900 dark:text-gray-100">
       <h2 className="text-2xl font-bold mb-4">🛍️ My Order List</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-300">
-          <thead className="bg-gray-100">
+        <table className="min-w-full border border-gray-300 dark:border-gray-700 rounded-lg">
+          <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>
               <th className="p-3 text-left">🥕 Product</th>
               <th className="p-3 text-left">🏪 Market</th>
@@ -38,13 +38,16 @@ const MyOrders = () => {
           <tbody>
             {orders.length === 0 ? (
               <tr>
-                <td colSpan={5} className="p-4 text-center text-gray-500">
+                <td colSpan={5} className="p-4 text-center text-gray-500 dark:text-gray-400">
                   No orders found.
                 </td>
               </tr>
             ) : (
               orders.map((order) => (
-                <tr key={order._id} className="border-t hover:bg-gray-50">
+                <tr
+                  key={order._id}
+                  className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                >
                   <td className="p-3 font-medium">{order.plantName}</td>
                   <td className="p-3">{order.marketName}</td>
                   <td className="p-3">৳{order.price}</td>

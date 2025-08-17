@@ -5,6 +5,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 const ManageWatchlist = () => {
   const { user } = useAuth();
@@ -29,29 +36,46 @@ const ManageWatchlist = () => {
       toast.success("✅ Removed from watchlist");
       refetch();
     } catch (err) {
-      toast.error("❌ Failed to remove item",err);
+      toast.error("❌ Failed to remove item", err);
     }
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-5">
-      <h2 className="text-2xl font-bold mb-4">🔖 Manage Watchlist</h2>
+    <div className="max-w-6xl mx-auto p-5 bg-white dark:bg-card dark:text-foreground rounded-lg shadow transition-colors duration-300">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-foreground">
+        🔖 Manage Watchlist
+      </h2>
 
-      <table className="w-full border">
-        <thead className="bg-gray-100">
+      <table className="w-full border border-gray-300 dark:border-border rounded-lg">
+        <thead className="bg-gray-100 dark:bg-muted/50">
           <tr>
-            <th className="p-3 text-left">📦 Product Name</th>
-            <th className="p-3 text-left">🏪 Market Name</th>
-            <th className="p-3 text-left">📅 Date Added</th>
-            <th className="p-3 text-left">⚙️ Actions</th>
+            <th className="p-3 text-left text-gray-600 dark:text-muted-foreground">
+              📦 Product Name
+            </th>
+            <th className="p-3 text-left text-gray-600 dark:text-muted-foreground">
+              🏪 Market Name
+            </th>
+            <th className="p-3 text-left text-gray-600 dark:text-muted-foreground">
+              📅 Date Added
+            </th>
+            <th className="p-3 text-left text-gray-600 dark:text-muted-foreground">
+              ⚙️ Actions
+            </th>
           </tr>
         </thead>
         <tbody>
           {watchlist.map((item) => (
-            <tr key={item._id} className="border-t">
-              <td className="p-3">{item.productName}</td>
-              <td className="p-3">{item.marketName}</td>
-              <td className="p-3">
+            <tr
+              key={item._id}
+              className="border-t border-gray-200 dark:border-border hover:bg-gray-50 dark:hover:bg-muted/50 transition-colors"
+            >
+              <td className="p-3 text-gray-700 dark:text-foreground">
+                {item.productName}
+              </td>
+              <td className="p-3 text-gray-700 dark:text-foreground">
+                {item.marketName}
+              </td>
+              <td className="p-3 text-gray-700 dark:text-foreground">
                 {new Date(item.addedAt).toLocaleDateString("en-GB")}
               </td>
               <td className="p-3 flex gap-3">
@@ -88,39 +112,29 @@ const ManageWatchlist = () => {
 };
 
 // Confirm Delete Modal
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-
 const ConfirmDeleteModal = ({ onConfirm, onCancel }) => {
-    const handleConfirm = async () => {
-        await onConfirm();
-        onCancel();
-    };
+  const handleConfirm = async () => {
+    await onConfirm();
+    onCancel();
+  };
 
-    return (
-        <Dialog open onOpenChange={onCancel}>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Confirm Deletion</DialogTitle>
-                </DialogHeader>
-                <p>Are you sure you want to remove this item from your watchlist?</p>
-                <DialogFooter className="flex gap-3 justify-end mt-4">
-                    <Button variant="ghost" onClick={onCancel}>
-                        Cancel
-                    </Button>
-                    <Button variant="destructive" onClick={handleConfirm}>
-                        Yes, Remove
-                    </Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    );
+  return (
+    <Dialog open onOpenChange={onCancel}>
+      <DialogContent className="dark:bg-gray-800 dark:text-gray-100 transition-colors duration-300">
+        <DialogHeader>
+          <DialogTitle>Confirm Deletion</DialogTitle>
+        </DialogHeader>
+        <DialogFooter className="flex gap-3 justify-end mt-4">
+          <Button variant="ghost" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button variant="destructive" onClick={handleConfirm}>
+            Yes, Remove
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
 };
-
 
 export default ManageWatchlist;

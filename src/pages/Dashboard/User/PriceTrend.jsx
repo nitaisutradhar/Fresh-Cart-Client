@@ -21,21 +21,24 @@ const PriceTrends = () => {
   const handleSelectProduct = (product) => {
     setSelectedProduct(product);
   };
-  if(isLoading) return <Loading />
+
+  if (isLoading) return <Loading />;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 pl-0 grid md:grid-cols-4 gap-6">
+    <div className="max-w-6xl mx-auto p-6 pl-0 grid md:grid-cols-4 gap-6 text-gray-900 dark:text-gray-100">
       {/* Left Sidebar - Tracked Items */}
-      <div className="col-span-1 border-r pr-4">
+      <div className="col-span-1 border-r border-gray-300 dark:border-gray-700 pr-4">
         <h2 className="text-xl font-bold mb-3">📌 Tracked Items</h2>
         <ul className="space-y-2">
           {products.map((product, idx) => (
             <li
               key={idx}
               onClick={() => handleSelectProduct(product)}
-              className={`cursor-pointer px-3 py-2 rounded-md hover:bg-gray-100 ${
-                selectedProduct?.itemName === product.itemName ? "bg-orange-100 font-semibold" : ""
-              }`}
+              className={`cursor-pointer px-3 py-2 rounded-md 
+                hover:bg-gray-100 dark:hover:bg-gray-700 
+                ${selectedProduct?.itemName === product.itemName 
+                  ? "bg-orange-100 dark:bg-orange-600 font-semibold" 
+                  : ""}`}
             >
               {product.itemName}
             </li>
@@ -58,21 +61,25 @@ const PriceTrends = () => {
                   price: parseFloat(p.price)
                 }))}
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
+                <CartesianGrid strokeDasharray="3 3" stroke="#ccc" className="dark:stroke-gray-700" />
+                <XAxis dataKey="date" stroke="#333" />
+                <YAxis stroke="#333" />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: "#fff", color: "#000" }} 
+                  wrapperStyle={{ color: "#000" }}
+                />
                 <Line type="monotone" dataKey="price" stroke="#ff7300" />
               </LineChart>
             </ResponsiveContainer>
 
-            {/* Optional: trend % logic */}
-            <p className="mt-4 font-medium text-green-600">
+            <p className="mt-4 font-medium text-green-600 dark:text-green-400">
               Trend: +3.8% last 7 days
             </p>
           </>
         ) : (
-          <p className="text-gray-500">📌 Select an item to view its price trend.</p>
+          <p className="text-gray-500 dark:text-gray-400">
+            📌 Select an item to view its price trend.
+          </p>
         )}
       </div>
     </div>

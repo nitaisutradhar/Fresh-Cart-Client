@@ -1,11 +1,12 @@
-import { Outlet } from 'react-router'
-import Sidebar from '../components/Dashboard/Sidebar/Sidebar'
+import { Outlet } from 'react-router';
+import Sidebar from '../components/Dashboard/Sidebar/Sidebar';
 
 const DashboardLayout = () => {
   return (
-    <div className='relative min-h-screen md:flex bg-white'>
+    <div className='relative min-h-screen md:flex bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300'>
       {/* Left Side: Sidebar Component */}
       <Sidebar />
+      
       {/* Right Side: Dashboard Dynamic Content */}
       <div className='flex-1 ml-0 md:ml-[250px]'>
         <div className='p-5'>
@@ -14,7 +15,7 @@ const DashboardLayout = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;
