@@ -41,7 +41,7 @@ export default function AdvertisementSection() {
 
   return (
     <motion.section 
-      className="py-16 bg-gray-100"
+      className="py-16 bg-gray-100 dark:bg-gray-900"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -55,13 +55,17 @@ export default function AdvertisementSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">Featured Promotions</h2>
-          <p className="text-gray-600 text-lg">Explore current promotions and vendor advertisements</p>
+          <h2 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+            Featured Promotions
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 text-lg">
+            Explore current promotions and vendor advertisements
+          </p>
         </motion.div>
 
         <div className="relative max-w-4xl mx-auto">
           <motion.div 
-            className="relative bg-white rounded-2xl shadow-lg overflow-hidden"
+            className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden"
             key={currentAdIndex}
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
@@ -73,14 +77,13 @@ export default function AdvertisementSection() {
               className="w-full h-64 md:h-80 object-cover"
             />
             <div className="p-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
+              <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3">
                 {currentAd?.title}
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 {currentAd?.description}
               </p>
-              <p className="text-sm text-green-600 font-semibold">
-                {/* Show created_at date if needed */}
+              <p className="text-sm text-green-600 dark:text-green-400 font-semibold">
                 {currentAd?.created_at && (
                   <>Posted: {new Date(currentAd.created_at).toLocaleDateString("en-GB")}</>
                 )}
@@ -91,15 +94,23 @@ export default function AdvertisementSection() {
           {/* Navigation buttons */}
           <button 
             onClick={prevAd}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg transition-all duration-300"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 
+                       bg-white dark:bg-gray-700 
+                       bg-opacity-80 hover:bg-opacity-100 
+                       dark:hover:bg-gray-600 
+                       rounded-full p-3 shadow-lg transition-all duration-300"
           >
-            <ChevronLeft size={24} className="text-gray-800" />
+            <ChevronLeft size={24} className="text-gray-800 dark:text-gray-200" />
           </button>
           <button 
             onClick={nextAd}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-3 shadow-lg transition-all duration-300"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 
+                       bg-white dark:bg-gray-700 
+                       bg-opacity-80 hover:bg-opacity-100 
+                       dark:hover:bg-gray-600 
+                       rounded-full p-3 shadow-lg transition-all duration-300"
           >
-            <ChevronRight size={24} className="text-gray-800" />
+            <ChevronRight size={24} className="text-gray-800 dark:text-gray-200" />
           </button>
 
           {/* Indicators */}
@@ -109,7 +120,9 @@ export default function AdvertisementSection() {
                 key={index}
                 onClick={() => setCurrentAdIndex(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentAdIndex ? 'bg-green-600' : 'bg-gray-300'
+                  index === currentAdIndex 
+                    ? "bg-green-600 dark:bg-green-400" 
+                    : "bg-gray-300 dark:bg-gray-600"
                 }`}
               />
             ))}
